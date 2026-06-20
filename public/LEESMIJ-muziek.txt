@@ -1,0 +1,17 @@
+Zet hier je achtergrondmuziek neer als:
+
+    achtergrond.mp3
+
+De muziek loopt zacht (half volume) en start zodra pa de eerste keer scrolt of
+tikt (browsers blokkeren automatisch geluid tot die eerste interactie). Met de
+knopje rechtsboven kan hij het geluid aan/uit zetten.
+
+Speelt jouw persoonlijke bericht (papa-bericht.mp3) af, dan zakt de muziek
+automatisch even weg zodat je stem er bovenuit komt, en daarna weer terug.
+
+Tips:
+- MP3 werkt op alle telefoons; ~128 kbps is prima.
+- Houd het instrumentaal/rustig — het is achtergrond.
+- Andere bestandsnaam? Pas SRC aan in src/components/BackgroundMusic.tsx.
+- Let op auteursrecht als je de site publiek deelt; gebruik liefst
+  rechtenvrije of eigen muziek.

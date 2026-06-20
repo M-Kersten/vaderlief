@@ -1,0 +1,120 @@
+import { useEffect, useRef, useState } from 'react'
+
+// Loopende achtergrondmuziek op half volume. Zet je nummer als
+// public/achtergrond.mp3 (zie public/LEESMIJ-muziek.txt).
+//
+// Browsers blokkeren autoplay-met-geluid tot de gebruiker iets doet, dus we
+// starten zachtjes bij de eerste interactie (tik/scroll). Een kleine knop laat
+// pa het geluid aan/uit zetten. Speelt het persoonlijke bericht af, dan duikt
+// de muziek automatisch weg ("ducking") zodat jouw stem er bovenuit komt.
+
+const SRC = `${import.meta.env.BASE_URL}achtergrond.mp3`
+const BASE_VOL = 0.5
+const DUCK_VOL = 0.12
+
+export default function BackgroundMusic() {
+  const ref = useRef<HTMLAudioElement>(null)
+  const ducked = useRef(false)
+  const [muted, setMuted] = useState(false)
+  const [available, setAvailable] = useState(true)
+
+  function applyVolume() {
+    const a = ref.current
+    if (!a) return
+    a.volume = ducked.current ? DUCK_VOL : BASE_VOL
+  }
+
+  // Foutafhandeling als het bestand (nog) ontbreekt.
+  useEffect(() => {
+    const a = ref.current
+    if (!a) return
+    a.volume = BASE_VOL
+    const onErr = () => setAvailable(false)
+    a.addEventListener('error', onErr)
+    return () => a.removeEventListener('error', onErr)
+  }, [])
+
+  // Start bij de eerste gebruikersinteractie.
+  useEffect(() => {
+    let done = false
+    const start = () => {
+      if (done) return
+      const a = ref.current
+      if (!a) return
+      applyVolume()
+      a.play()
+        .then(() => {
+          done = true
+          remove()
+        })
+        .catch(() => {
+          /* mag mislukken; de knop is de terugval */
+        })
+    }
+    const events = ['pointerdown', 'touchstart', 'keydown', 'scroll'] as const
+    const remove = () =>
+      events.forEach((e) => window.removeEventListener(e, start))
+    events.forEach((e) =>
+      window.addEventListener(e, start, { once: false, passive: true }),
+    )
+    return remove
+  }, [])
+
+  // Ducking: zachter zetten terwijl het ingesproken bericht speelt.
+  useEffect(() => {
+    const duck = () => {
+      ducked.current = true
+      applyVolume()
+    }
+    const unduck = () => {
+      ducked.current = false
+      applyVolume()
+    }
+    window.addEventListener('voice:play', duck)
+    window.addEventListener('voice:pause', unduck)
+    return () => {
+      window.removeEventListener('voice:play', duck)
+      window.removeEventListener('voice:pause', unduck)
+    }
+  }, [])
+
+  function toggle() {
+    const a = ref.current
+    if (!a) return
+    if (muted) {
+      a.muted = false
+      a.play().catch(() => {})
+      setMuted(false)
+    } else {
+      a.muted = true
+      setMuted(true)
+    }
+  }
+
+  if (!available) return <audio ref={ref} src={SRC} loop preload="auto" />
+
+  return (
+    <>
+      <audio ref={ref} src={SRC} loop preload="auto" />
+      <button
+        type="button"
+        className={`music-toggle${muted ? ' is-muted' : ''}`}
+        onClick={toggle}
+        aria-label={muted ? 'Muziek aanzetten' : 'Muziek uitzetten'}
+        title={muted ? 'Muziek aan' : 'Muziek uit'}
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 9v6h4l5 4V5L8 9H4z" />
+          {muted ? (
+            <path className="x" d="M16 9l5 6M21 9l-5 6" />
+          ) : (
+            <>
+              <path className="wave" d="M16.5 8.5a5 5 0 0 1 0 7" />
+              <path className="wave" d="M19 6a8.5 8.5 0 0 1 0 12" />
+            </>
+          )}
+        </svg>
+      </button>
+    </>
+  )
+}

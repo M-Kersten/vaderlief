@@ -28,6 +28,8 @@ export default function AudioMessage() {
     const onEnd = () => {
       setPlaying(false)
       setTime(0)
+      // Achtergrondmuziek weer op vol (half) volume.
+      window.dispatchEvent(new Event('voice:pause'))
     }
     const onErr = () => setAvailable(false)
     a.addEventListener('timeupdate', onTime)
@@ -48,9 +50,14 @@ export default function AudioMessage() {
     if (playing) {
       a.pause()
       setPlaying(false)
+      window.dispatchEvent(new Event('voice:pause'))
     } else {
       a.play()
-        .then(() => setPlaying(true))
+        .then(() => {
+          setPlaying(true)
+          // Laat de achtergrondmuziek wegduiken zodat de stem bovenuit komt.
+          window.dispatchEvent(new Event('voice:play'))
+        })
         .catch(() => setAvailable(false))
     }
   }

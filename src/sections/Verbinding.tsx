@@ -1,33 +1,43 @@
 import { useEffect, useRef, useState } from 'react'
 
-// Een foto van vader (links) en zoon (rechts) die naar elkaar toe bewegen,
-// met een subtiele verbindingsbalk die tussen hen vol loopt. Zet je foto's als
-// public/vader.jpg en public/zoon.jpg (zie public/LEESMIJ-fotos.txt). Ontbreekt
-// een foto, dan toont het frame netjes een initiaal.
+// Tech-stijl "verbinden": een beveiligde handshake-terminal met een
+// voortgangsbalk en een strip van vier foto's van jullie samen die als
+// "gedeelde herinneringen" inladen terwijl de verbinding tot stand komt.
+//
+// Zet je foto's als public/samen-1.jpg t/m public/samen-4.jpg
+// (zie public/LEESMIJ-fotos.txt). Ontbreekt er een, dan toont het frame een
+// nummer in plaats van de foto.
 
-const VADER = `${import.meta.env.BASE_URL}vader.jpg`
-const ZOON = `${import.meta.env.BASE_URL}zoon.jpg`
+const BASE = import.meta.env.BASE_URL
+const PHOTOS = [1, 2, 3, 4].map((n) => `${BASE}samen-${n}.jpg`)
+const PHOTO_AT = [22, 46, 70, 92]
 
-function Avatar({
-  src,
-  label,
-  initial,
-}: {
-  src: string
-  label: string
-  initial: string
-}) {
+const STEPS: { at: number; text: string; ok?: boolean }[] = [
+  { at: 6, text: 'Kanaal openen…' },
+  { at: 26, text: 'Handshake vader ⟷ zoon… OK', ok: true },
+  { at: 50, text: 'Gedeelde herinneringen laden…' },
+  { at: 74, text: 'Synchroniseren… OK', ok: true },
+  { at: 92, text: 'Versleutelen… OK', ok: true },
+]
+
+function Memory({ src, index, shown }: { src: string; index: number; shown: boolean }) {
   const [ok, setOk] = useState(true)
   return (
-    <div className="person">
-      <div className="person__frame">
+    <div className={`mem${shown ? ' is-shown' : ''}`}>
+      <div className="mem__frame">
         {ok ? (
-          <img src={src} alt={label} onError={() => setOk(false)} />
+          <img
+            src={src}
+            alt={`Samen ${index}`}
+            loading="lazy"
+            onError={() => setOk(false)}
+          />
         ) : (
-          <span className="person__fallback">{initial}</span>
+          <span className="mem__fallback">0{index}</span>
         )}
+        <span className="mem__scan" aria-hidden="true" />
       </div>
-      <span className="person__label">{label}</span>
+      <span className="mem__tag">0{index}</span>
     </div>
   )
 }
@@ -35,7 +45,6 @@ function Avatar({
 export default function Verbinding() {
   const ref = useRef<HTMLDivElement>(null)
   const [pct, setPct] = useState(0)
-  const [active, setActive] = useState(false)
   const [connected, setConnected] = useState(false)
   const started = useRef(false)
 
@@ -51,24 +60,20 @@ export default function Verbinding() {
           run()
         }
       },
-      { threshold: 0.5 },
+      { threshold: 0.45 },
     )
     io.observe(el)
 
     let raf = 0
     function run() {
-      setActive(true) // foto's schuiven naar elkaar toe
-      const duration = 2000 // subtiel en rustig
+      const duration = 2600
       const start = performance.now()
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / duration)
         const eased = 1 - Math.pow(1 - t, 2)
         setPct(Math.round(eased * 100))
-        if (t < 1) {
-          raf = requestAnimationFrame(tick)
-        } else {
-          setConnected(true)
-        }
+        if (t < 1) raf = requestAnimationFrame(tick)
+        else setConnected(true)
       }
       raf = requestAnimationFrame(tick)
     }
@@ -79,31 +84,53 @@ export default function Verbinding() {
     }
   }, [])
 
+  const visibleSteps = STEPS.filter((s) => pct >= s.at)
+
   return (
     <section className="section section--center" id="verbinding">
-      <p className="kicker" style={{ marginBottom: '0.4rem' }}>
-        {connected ? 'Verbonden' : 'Verbinden'}
-        <span className="caret" />
-      </p>
+      <div className="linkterm terminal" ref={ref}>
+        <div className="terminal__bar">
+          <span className="dot dot--g" />
+          <span className="dot" />
+          <span className="dot" />
+          <span className="terminal__title">secure_link --connect</span>
+        </div>
 
-      <div
-        className={`connect${active ? ' is-active' : ''}${
-          connected ? ' is-connected' : ''
-        }`}
-        ref={ref}
-        style={{ ['--p' as string]: `${pct}%` }}
-      >
-        <div className="connect__people">
-          <Avatar src={VADER} label="Vader" initial="V" />
+        <div className="linkterm__head">
+          <span className="linkterm__nodes">
+            Vader <span className="accent">⟷</span> Zoon
+          </span>
+          <span className={`linkterm__status${connected ? ' online' : ''}`}>
+            {connected ? '● ONLINE' : '● ESTABLISHING'}
+          </span>
+        </div>
 
-          <div className="connect__link" aria-hidden="true">
-            <div className="connect__track">
-              <div className="connect__fill" />
-            </div>
-            <span className="connect__spark">♥</span>
+        <div className="linkbar">
+          <div className="linkbar__track">
+            <div className="linkbar__fill" style={{ width: `${pct}%` }} />
           </div>
+          <span className="linkbar__pct">{pct}%</span>
+        </div>
 
-          <Avatar src={ZOON} label="Zoon" initial="Z" />
+        <div className="memories" aria-label="Foto's van ons samen">
+          {PHOTOS.map((src, i) => (
+            <Memory
+              key={src}
+              src={src}
+              index={i + 1}
+              shown={pct >= PHOTO_AT[i]}
+            />
+          ))}
+        </div>
+
+        <div className="linkterm__log">
+          {visibleSteps.map((s) => (
+            <div className="logline" key={s.at}>
+              {s.ok && <span className="ok">✓ </span>}
+              {s.text}
+            </div>
+          ))}
+          {!connected && <span className="caret" />}
         </div>
       </div>
 

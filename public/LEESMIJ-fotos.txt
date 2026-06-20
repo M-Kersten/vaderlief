@@ -1,12 +1,14 @@
-Zet hier twee foto's neer voor de "Verbinden"-sectie (waar vader en zoon
-elkaar ontmoeten):
+Zet hier vier foto's van jullie samen neer voor de "Verbinden"-sectie. Ze
+laden één voor één in terwijl de verbinding tot stand komt:
 
-    vader.jpg   — een foto van je vader
-    zoon.jpg    — een foto van jou
+    samen-1.jpg
+    samen-2.jpg
+    samen-3.jpg
+    samen-4.jpg
 
 Tips:
-- Vierkant bijsnijden werkt het mooist (ze worden rond getoond).
-- ~600x600 px is ruim voldoende; houd het bestand klein voor snelheid.
-- Ontbreekt een foto? Dan toont het frame netjes een initiaal (V / Z).
-- Andere bestandsnaam of .png gebruiken? Pas VADER/ZOON aan boven in
+- Vierkant bijsnijden werkt het mooist (ze worden als vierkante frames getoond).
+- ~600x600 px per foto is ruim voldoende; houd de bestanden klein voor snelheid.
+- Ontbreekt een foto? Dan toont het frame netjes een nummer (01 t/m 04).
+- Andere bestandsnamen of .png? Pas PHOTOS aan boven in
   src/sections/Verbinding.tsx.
