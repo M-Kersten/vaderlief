@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react'
 import emailjs from '@emailjs/browser'
 import Reveal from '../components/Reveal'
+import GiftPicker from '../components/GiftPicker'
+import { GIFTS } from '../gifts'
 import { emailjsConfig, isEmailConfigured } from '../config'
 
 type Status = 'idle' | 'sending' | 'sent' | 'error'
@@ -23,6 +25,7 @@ function formatDate(value: string): string {
 }
 
 export default function Formulier() {
+  const [gift, setGift] = useState<string | null>(null)
   const [date, setDate] = useState('')
   const [message, setMessage] = useState('')
   const [status, setStatus] = useState<Status>('idle')
@@ -32,13 +35,19 @@ export default function Formulier() {
     e.preventDefault()
     setError('')
 
+    if (!gift) {
+      setError('Kies eerst een cadeau — wat lijkt je het leukst?')
+      return
+    }
     if (!date) {
-      setError('Kies eerst een datum — dan zetten we de dag op de kaart.')
+      setError('Kies een datum — dan zetten we de dag op de kaart.')
       return
     }
 
+    const giftLabel = GIFTS.find((g) => g.id === gift)?.label ?? gift
     const prettyDate = formatDate(date)
     const params = {
+      cadeau: giftLabel,
       datum: prettyDate,
       datum_iso: date,
       bericht: message.trim() || '(geen extra bericht)',
@@ -49,8 +58,8 @@ export default function Formulier() {
       // maar log een duidelijke hint voor wie de site beheert.
       console.warn(
         '[Vaderlief] EmailJS is nog niet geconfigureerd. Vul je sleutels in ' +
-          'via .env (zie .env.example) om het verzoek echt te versturen.\n' +
-          'Zou verzonden zijn:',
+          'via .env (zie .env.example) of als repository-secrets om het ' +
+          'verzoek echt te versturen.\nZou verzonden zijn:',
         params,
       )
       setStatus('sent')
@@ -77,7 +86,12 @@ export default function Formulier() {
   }
 
   if (status === 'sent') {
-    return <Success date={formatDate(date)} />
+    return (
+      <Success
+        date={formatDate(date)}
+        giftTitle={GIFTS.find((g) => g.id === gift)?.title ?? ''}
+      />
+    )
   }
 
   return (
@@ -87,11 +101,18 @@ export default function Formulier() {
           Plan onze dag
         </Reveal>
         <Reveal as="p" className="lead muted" delay={1} start="top 84%">
-          Wanneer heb je zin om samen een dagje weg te gaan?
+          Kies je cadeau en laat weten wanneer je samen een dagje weg wilt.
         </Reveal>
       </div>
 
       <form className="form" onSubmit={handleSubmit} noValidate>
+        <div className="field">
+          <label>
+            Cadeau <span className="req">*kies er één</span>
+          </label>
+          <GiftPicker value={gift} onChange={setGift} />
+        </div>
+
         <div className="field">
           <label htmlFor="datum">
             Datum <span className="req">*verplicht</span>
@@ -127,8 +148,8 @@ export default function Formulier() {
         {!isEmailConfigured() && (
           <p className="form-note">
             Tip voor de beheerder: stel je EmailJS-sleutels in (zie
-            <code> .env.example</code>) zodat het verzoek echt in je inbox
-            belandt.
+            <code> .env.example</code> of de repository-secrets) zodat het
+            verzoek echt in je inbox belandt.
           </p>
         )}
       </form>
@@ -136,7 +157,7 @@ export default function Formulier() {
   )
 }
 
-function Success({ date }: { date: string }) {
+function Success({ date, giftTitle }: { date: string; giftTitle: string }) {
   return (
     <section className="section section--center" id="verzonden">
       <div className="success">
@@ -148,15 +169,21 @@ function Success({ date }: { date: string }) {
         <div className="success__lines">
           <p className="kicker accent">Verbinding gemaakt…</p>
           <p className="lead">Bericht succesvol verzonden.</p>
-          {date && (
+          {(giftTitle || date) && (
             <p className="muted">
-              Voorstel: <span className="accent">{date}</span>
+              {giftTitle && (
+                <>
+                  <span className="accent">{giftTitle}</span>
+                </>
+              )}
+              {giftTitle && date ? ' · ' : ''}
+              {date && <span className="accent">{date}</span>}
             </p>
           )}
           <p className="lead warm">Ik kijk ernaar uit.</p>
         </div>
         <p className="version" style={{ marginTop: '0.5rem' }}>
-          ❤️ Papa &amp; zoon wellnessdag
+          ❤️ Papa &amp; zoon dag
         </p>
       </div>
     </section>

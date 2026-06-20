@@ -2,8 +2,9 @@ import ExecList, { type ExecStep } from '../components/ExecList'
 import Reveal from '../components/Reveal'
 
 const STEPS: ExecStep[] = [
-  { cmd: 'Geen kleinkinderen om op te passen...', done: true },
-  { cmd: 'Geen gras om te maaien...', done: true },
+  { cmd: 'Geen kleinkinderen om op te passen (nog niet)...', done: true },
+  { cmd: 'Geen optreden geboekt...', done: true },
+  { cmd: 'Dave (Davemans) heeft een oppas...', done: true },
   { cmd: 'Geen klusjes gepland...', done: true },
 ]
 

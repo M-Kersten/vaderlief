@@ -1,4 +1,5 @@
 import Reveal from '../components/Reveal'
+import AudioMessage from '../components/AudioMessage'
 
 export default function Onthulling() {
   return (
@@ -14,10 +15,10 @@ export default function Onthulling() {
       <Reveal as="h2" className="title glow-warm" delay={1} start="top 80%">
         Vader &amp; Zoon
         <br />
-        Wellnessdag
+        Dag
       </Reveal>
 
-      <div className="panel" style={{ marginTop: '1.8rem' }}>
+      <div className="panel" style={{ marginTop: '1.6rem' }}>
         <Reveal as="p" className="lead" delay={2} start="top 84%">
           Een dag om even stil te staan.
         </Reveal>
@@ -28,6 +29,10 @@ export default function Onthulling() {
           En vooral: samen tijd doorbrengen.
         </Reveal>
       </div>
+
+      <Reveal className="panel" delay={4} start="top 90%">
+        <AudioMessage />
+      </Reveal>
     </section>
   )
 }

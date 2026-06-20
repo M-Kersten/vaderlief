@@ -1,0 +1,13 @@
+Zet hier je persoonlijke spraakbericht neer als:
+
+    papa-bericht.mp3
+
+Dit bestand wordt automatisch in de speler op de site geladen (te zien bij
+de onthulling "Vader & Zoon Dag"). Zolang het bestand er niet is, toont de
+speler netjes "berichtje volgt".
+
+Tips:
+- Houd het kort en persoonlijk (30-90 sec werkt fijn).
+- MP3 is het veiligst voor alle telefoons; ~128 kbps is ruim voldoende.
+- Wil je een andere bestandsnaam? Pas dan SRC aan in
+  src/components/AudioMessage.tsx.

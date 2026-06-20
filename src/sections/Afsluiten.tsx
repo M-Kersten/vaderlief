@@ -3,8 +3,10 @@ import Reveal from '../components/Reveal'
 
 const STEPS: ExecStep[] = [
   { cmd: 'Werkmail uitschakelen...', done: true },
+  { cmd: 'Onafgemaakte websites laten rusten...', done: true },
   { cmd: 'To-do lijst negeren...', done: true },
   { cmd: 'Telefoon op stil...', done: true },
+  { cmd: 'Dave een extra koekje geven...', done: true },
   { cmd: 'Verantwoordelijkheden tijdelijk parkeren...', done: true },
   { cmd: 'Ontspanningsmodus laden...', done: false },
 ]

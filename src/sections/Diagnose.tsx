@@ -3,7 +3,8 @@ import Reveal from '../components/Reveal'
 
 const ROWS: { label: string; value: string; tone: 'good' | 'bad' | 'dim' }[] = [
   { label: 'Stressniveau', value: '87%', tone: 'bad' },
-  { label: 'Agenda', value: 'Vol', tone: 'bad' },
+  { label: 'Open browsertabs', value: 'Te veel', tone: 'bad' },
+  { label: 'Agenda (werk + bands)', value: 'Vol', tone: 'bad' },
   { label: 'Meldingen', value: 'Aan', tone: 'bad' },
   { label: 'Ontspanning', value: 'Niet gevonden', tone: 'dim' },
 ]
