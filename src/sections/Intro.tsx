@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Terminal, { Row } from '../components/Terminal'
+import { sfx } from '../sound'
 
 const STATS: { label: string; value: string; tone?: 'good' | 'bad' | 'dim' }[] =
   [
@@ -21,6 +22,7 @@ export default function Intro() {
     const id = setInterval(() => {
       i++
       setTyped(full.slice(0, i))
+      sfx.type() // zachte toetsaanslag-blip (speelt pas na 1e interactie)
       if (i >= full.length) clearInterval(id)
     }, 95)
     return () => clearInterval(id)

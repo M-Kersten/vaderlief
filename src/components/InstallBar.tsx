@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { sfx } from '../sound'
 
 // Een "installer" die vol loopt zodra hij in beeld komt: meerdere fases met
 // een meelopend logregeltje, eindigend op 100% — cadeau actief.
@@ -43,12 +44,19 @@ export default function InstallBar() {
       let stageStart = performance.now()
       setLog(STAGES[0].log)
 
+      let lastBlip = 0
       const tick = (now: number) => {
         const stage = STAGES[stageIndex]
         const t = Math.min(1, (now - stageStart) / stage.ms)
         // easeOutCubic voor een soepele, "echte" vulling
         const eased = 1 - Math.pow(1 - t, 3)
         setPct(Math.round(from + (stage.to - from) * eased))
+
+        // Af en toe een data-blip terwijl de balk vult.
+        if (now - lastBlip > 140) {
+          lastBlip = now
+          sfx.data()
+        }
 
         if (t >= 1) {
           if (stageIndex < STAGES.length - 1) {
@@ -61,6 +69,7 @@ export default function InstallBar() {
             setPct(100)
             setDone(true)
             setLog('Voltooid')
+            sfx.success()
           }
         } else {
           raf = requestAnimationFrame(tick)

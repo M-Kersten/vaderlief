@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { setSoundMuted, unlockSound } from '../sound'
 
 // Loopende achtergrondmuziek op half volume. Zet je nummer als
 // public/achtergrond.mp3 (zie public/LEESMIJ-muziek.txt).
@@ -38,6 +39,7 @@ export default function BackgroundMusic() {
   useEffect(() => {
     let done = false
     const start = () => {
+      unlockSound() // sci-fi effecten mogen nu ook spelen
       if (done) return
       const a = ref.current
       if (!a) return
@@ -79,29 +81,28 @@ export default function BackgroundMusic() {
   }, [])
 
   function toggle() {
+    unlockSound()
+    const next = !muted
+    setMuted(next)
+    setSoundMuted(next) // dempt ook de sci-fi effecten
     const a = ref.current
-    if (!a) return
-    if (muted) {
-      a.muted = false
-      a.play().catch(() => {})
-      setMuted(false)
-    } else {
-      a.muted = true
-      setMuted(true)
+    if (a) {
+      a.muted = next
+      if (!next) a.play().catch(() => {})
     }
   }
 
-  if (!available) return <audio ref={ref} src={SRC} loop preload="auto" />
-
+  // De knop bestuurt al het geluid (muziek + sci-fi effecten). Ook zonder
+  // muziekbestand blijft de knop staan om de effecten te kunnen dempen.
   return (
     <>
-      <audio ref={ref} src={SRC} loop preload="auto" />
+      {available && <audio ref={ref} src={SRC} loop preload="auto" />}
       <button
         type="button"
         className={`music-toggle${muted ? ' is-muted' : ''}`}
         onClick={toggle}
-        aria-label={muted ? 'Muziek aanzetten' : 'Muziek uitzetten'}
-        title={muted ? 'Muziek aan' : 'Muziek uit'}
+        aria-label={muted ? 'Geluid aanzetten' : 'Geluid uitzetten'}
+        title={muted ? 'Geluid aan' : 'Geluid uit'}
       >
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M4 9v6h4l5 4V5L8 9H4z" />

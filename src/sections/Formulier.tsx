@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal'
 import GiftPicker from '../components/GiftPicker'
 import { GIFTS } from '../gifts'
 import { isDiscordConfigured, sendToDiscord } from '../notify'
+import { sfx } from '../sound'
 
 // Waar het mailtje heen gaat als terugval (mocht Discord niet ingesteld zijn).
 const TO = 'info@merijnkersten.nl'
@@ -57,6 +58,7 @@ export default function Formulier() {
     setError('')
 
     if (!gift || !selected) {
+      sfx.error()
       setError('Kies eerst een cadeau — wat lijkt je het leukst?')
       return
     }
@@ -69,6 +71,8 @@ export default function Formulier() {
           : 'in overleg / flexibel'
 
     setSending(true)
+    sfx.transmit()
+    navigator.vibrate?.([10, 30, 10])
 
     // Eerst proberen via Discord (het "seintje"). Lukt dat niet, dan valt het
     // terug op de mailapp, zodat het verzoek nooit verloren gaat.
@@ -82,6 +86,7 @@ export default function Formulier() {
 
     setSending(false)
     setSent(true)
+    sfx.success()
   }
 
   if (sent) {

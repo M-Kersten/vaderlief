@@ -1,5 +1,6 @@
 import Reveal from '../components/Reveal'
 import AudioMessage from '../components/AudioMessage'
+import { sfx } from '../sound'
 
 export default function Onthulling() {
   return (
@@ -8,7 +9,12 @@ export default function Onthulling() {
       id="onthulling"
       style={{ minHeight: '110svh' }}
     >
-      <Reveal as="h2" className="title glow-warm" start="top 80%">
+      <Reveal
+        as="h2"
+        className="title glow-warm"
+        start="top 80%"
+        onReveal={() => sfx.whoosh()}
+      >
         Vader &amp; Zoon
         <br />
         Dag

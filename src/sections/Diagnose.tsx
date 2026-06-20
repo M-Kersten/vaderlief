@@ -1,4 +1,5 @@
 import Terminal, { Row } from '../components/Terminal'
+import { sfx } from '../sound'
 
 const ROWS: { label: string; value: string; tone: 'crit' | 'bad' | 'dim' }[] = [
   { label: 'Stressniveau', value: '98%', tone: 'crit' },
@@ -27,7 +28,7 @@ export default function Diagnose() {
   return (
     <section className="section" id="diagnose">
       <div style={{ width: '100%' }}>
-        <Terminal title="diagnose --scan">
+        <Terminal title="diagnose --scan" onReveal={() => sfx.alert()}>
           <div className="alert">Systeem overbelast — onderhoud vereist</div>
 
           {ROWS.map((r, i) => (

@@ -1,4 +1,5 @@
 import { useReveal } from '../hooks/useReveal'
+import { sfx } from '../sound'
 
 export type ExecStep = {
   cmd: string
@@ -8,7 +9,10 @@ export type ExecStep = {
 
 function Item({ step }: { step: ExecStep }) {
   // Elke regel "voert uit" zodra hij ver genoeg in beeld komt.
-  const ref = useReveal<HTMLLIElement>({ start: 'top 72%' })
+  const ref = useReveal<HTMLLIElement>({
+    start: 'top 72%',
+    onEnter: () => (step.done === false ? sfx.data() : sfx.tick()),
+  })
   return (
     <li ref={ref} className="exec-item">
       <span className="cmd">{step.cmd}</span>

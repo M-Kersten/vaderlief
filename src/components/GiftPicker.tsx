@@ -1,4 +1,5 @@
 import { GIFTS } from '../gifts'
+import { sfx } from '../sound'
 
 /** Kaartjes waaruit pa zijn cadeau kiest. */
 export default function GiftPicker({
@@ -19,7 +20,11 @@ export default function GiftPicker({
             role="radio"
             aria-checked={selected}
             className={`gift${selected ? ' is-selected' : ''}`}
-            onClick={() => onChange(g.id)}
+            onClick={() => {
+              sfx.ui()
+              navigator.vibrate?.(12)
+              onChange(g.id)
+            }}
           >
             <span className="gift__icon">{g.icon}</span>
             <span className="gift__text">

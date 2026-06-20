@@ -103,6 +103,29 @@ main {
 .music-toggle:active {
   transform: scale(0.92);
 }
+/* Korte hint-puls bij het laden zodat pa het geluidsknopje opmerkt. */
+.music-toggle::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1px solid var(--green);
+  opacity: 0;
+  animation: hintPulse 1.8s ease-out 4;
+}
+.music-toggle.is-muted::after {
+  animation: none;
+}
+@keyframes hintPulse {
+  0% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
 .music-toggle.is-muted {
   color: var(--ink-dim);
   border-color: rgba(138, 151, 143, 0.3);

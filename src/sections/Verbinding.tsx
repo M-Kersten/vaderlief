@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { sfx } from '../sound'
 
 // Tech-stijl "verbinden": een beveiligde handshake-terminal met een
 // voortgangsbalk en een strip van vier foto's van jullie samen die als
@@ -68,12 +69,29 @@ export default function Verbinding() {
     function run() {
       const duration = 2600
       const start = performance.now()
+      let announced = 0
+      let lastBlip = 0
       const tick = (now: number) => {
         const t = Math.min(1, (now - start) / duration)
         const eased = 1 - Math.pow(1 - t, 2)
-        setPct(Math.round(eased * 100))
-        if (t < 1) raf = requestAnimationFrame(tick)
-        else setConnected(true)
+        const p = Math.round(eased * 100)
+        setPct(p)
+
+        // Handshake-tik bij elke nieuwe logstap, plus subtiele data-blips.
+        if (announced < STEPS.length && p >= STEPS[announced].at) {
+          announced++
+          sfx.connect()
+        } else if (now - lastBlip > 160) {
+          lastBlip = now
+          sfx.data()
+        }
+
+        if (t < 1) {
+          raf = requestAnimationFrame(tick)
+        } else {
+          setConnected(true)
+          sfx.success()
+        }
       }
       raf = requestAnimationFrame(tick)
     }

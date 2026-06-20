@@ -30,11 +30,13 @@ export function Row({
 export default function Terminal({
   title,
   children,
+  onReveal,
 }: {
   title: string
   children: ReactNode
+  onReveal?: () => void
 }) {
-  const ref = useReveal<HTMLDivElement>()
+  const ref = useReveal<HTMLDivElement>({ onEnter: onReveal })
   return (
     <div ref={ref} className="terminal reveal">
       <div className="terminal__bar">
