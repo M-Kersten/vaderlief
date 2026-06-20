@@ -27,8 +27,17 @@ const CHORES = [
 export default function Diagnose() {
   return (
     <section className="section" id="diagnose">
-      <div style={{ width: '100%' }}>
-        <Terminal title="diagnose --scan" onReveal={() => sfx.alert()}>
+      <div className="block">
+        <Terminal
+          title="diagnose --scan"
+          onReveal={() => {
+            sfx.scan()
+            window.setTimeout(() => {
+              sfx.glitch()
+              sfx.alert()
+            }, 480)
+          }}
+        >
           <div className="alert">Systeem overbelast — onderhoud vereist</div>
 
           {ROWS.map((r, i) => (

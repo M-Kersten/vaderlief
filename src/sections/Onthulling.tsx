@@ -20,7 +20,7 @@ export default function Onthulling() {
         Dag
       </Reveal>
 
-      <div className="panel" style={{ marginTop: '1.6rem' }}>
+      <div className="panel">
         <Reveal as="p" className="lead" delay={2} start="top 84%">
           Een dag om even stil te staan.
         </Reveal>

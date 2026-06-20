@@ -5,7 +5,7 @@ import InstallBar from '../components/InstallBar'
 export default function Installatie() {
   return (
     <section className="section section--center" id="installatie">
-      <div style={{ width: '100%' }}>
+      <div className="block">
         <Terminal title="installer">
           <Row label="pakket" value="vader_zoon_dag" />
           <Row label="versie" value="v1.0" tone="dim" />
@@ -18,9 +18,7 @@ export default function Installatie() {
         Cadeau succesvol geïnstalleerd
       </Reveal>
 
-      <p className="version" style={{ marginTop: '0.6rem' }}>
-        vader_zoon_dag_v1.0 · status: Actief ✓
-      </p>
+      <p className="version">vader_zoon_dag_v1.0 · status: Actief ✓</p>
 
       <Reveal as="p" className="lead accent" delay={2} start="top 80%">
         Laatste stap vereist<span className="caret" />

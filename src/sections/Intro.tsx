@@ -31,17 +31,15 @@ export default function Intro() {
   return (
     <section className="section section--center" id="intro">
       <div className="panel">
-        <p className="eyebrow" style={{ marginBottom: '1.1rem' }}>
-          // wakker worden, papa…
-        </p>
+        <p className="eyebrow">// wakker worden, papa…</p>
         <h1 className="display">Vaderdag 2026</h1>
-        <p className="kicker" style={{ marginTop: '1.3rem' }}>
+        <p className="kicker">
           {typed}
           <span className="caret" />
         </p>
       </div>
 
-      <div style={{ marginTop: '2.4rem', width: '100%' }}>
+      <div className="block">
         <Terminal title="boot.seq">
           {STATS.map((s, i) => (
             <Row

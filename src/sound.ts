@@ -117,6 +117,34 @@ export const sfx = {
     tone(220, 0.16, { type: 'sawtooth', gain: 0.3, when: 0.2, slideTo: 150 })
   },
 
+  /** Diagnostische scan: serie oplopende blips. */
+  scan: () => {
+    for (let i = 0; i < 6; i++)
+      tone(500 + i * 130, 0.05, {
+        type: 'square',
+        gain: 0.22,
+        when: i * 0.075,
+      })
+  },
+
+  /** Korte glitch/ruisburst (systeem hapert). */
+  glitch: () => noiseSweep(0.18, 1800, 400, 0.3),
+
+  /** Interface windt af: zachte dalende toon (sectie "Rust"). */
+  powerdown: () => {
+    tone(620, 1.1, { type: 'sine', gain: 0.32, slideTo: 90 })
+    tone(930, 1.1, { type: 'sine', gain: 0.16, slideTo: 140 })
+    noiseSweep(1.2, 1200, 120, 0.14)
+  },
+
+  /** Warme, rustgevende pad/akkoord ("Even niets hoeven"). */
+  calm: () => {
+    const notes = [261.63, 329.63, 392.0] // C-majeur, zacht
+    notes.forEach((f, i) =>
+      tone(f, 1.6, { type: 'sine', gain: 0.22, when: i * 0.12 }),
+    )
+  },
+
   /** Handshake-toon (twee tikken). */
   connect: () => {
     tone(660, 0.05, { type: 'square', gain: 0.35 })

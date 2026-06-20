@@ -207,9 +207,7 @@ function Success({
           </p>
           <p className="lead warm">Ik kijk ernaar uit.</p>
         </div>
-        <p className="version" style={{ marginTop: '0.5rem' }}>
-          ❤️ Papa &amp; zoon dag
-        </p>
+        <p className="version">❤️ Papa &amp; zoon dag</p>
       </div>
     </section>
   )
