@@ -30,7 +30,7 @@ export default function Intro() {
     <section className="section section--center" id="intro">
       <div className="panel">
         <p className="eyebrow" style={{ marginBottom: '1.1rem' }}>
-          // Initialiseren
+          // wakker worden, papa…
         </p>
         <h1 className="display">Vaderdag 2026</h1>
         <p className="kicker" style={{ marginTop: '1.3rem' }}>

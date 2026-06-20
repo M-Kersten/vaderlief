@@ -3,7 +3,7 @@ import Reveal from '../components/Reveal'
 
 const STEPS: ExecStep[] = [
   { cmd: 'Geen kleinkinderen om op te passen (nog niet)...', done: true },
-  { cmd: 'Geen optreden geboekt...', done: true },
+  { cmd: 'Geen websites die vandaag live moeten...', done: true },
   { cmd: 'Dave (Davemans) heeft een oppas...', done: true },
   { cmd: 'Geen klusjes gepland...', done: true },
 ]

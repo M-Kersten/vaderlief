@@ -39,11 +39,6 @@ jobs:
 
       - name: Bouwen
         run: npm run build
-        env:
-          # EmailJS-sleutels komen uit repository-secrets (zie README).
-          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
-          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
-          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
 
       - name: Pages configureren
         uses: actions/configure-pages@v5

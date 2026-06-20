@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react'
 import { useReveal } from '../hooks/useReveal'
 
-export type Tone = 'good' | 'bad' | 'dim'
+export type Tone = 'good' | 'bad' | 'dim' | 'crit'
 
 export function Row({
   label,

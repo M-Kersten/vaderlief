@@ -3,6 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import Background from './three/Background'
+import MatrixRain from './three/MatrixRain'
 import { setScrollProgress } from './scrollStore'
 
 import Intro from './sections/Intro'
@@ -40,6 +41,7 @@ export default function App() {
 
   return (
     <>
+      <MatrixRain />
       <Background />
       <div className="scanlines" aria-hidden="true" />
       <main>
