@@ -1,0 +1,12 @@
+Zet hier twee foto's neer voor de "Verbinden"-sectie (waar vader en zoon
+elkaar ontmoeten):
+
+    vader.jpg   — een foto van je vader
+    zoon.jpg    — een foto van jou
+
+Tips:
+- Vierkant bijsnijden werkt het mooist (ze worden rond getoond).
+- ~600x600 px is ruim voldoende; houd het bestand klein voor snelheid.
+- Ontbreekt een foto? Dan toont het frame netjes een initiaal (V / Z).
+- Andere bestandsnaam of .png gebruiken? Pas VADER/ZOON aan boven in
+  src/sections/Verbinding.tsx.

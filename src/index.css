@@ -91,7 +91,7 @@ main {
   justify-content: center;
   align-items: flex-start;
   padding: clamp(1.6rem, 6vw, 5rem) clamp(1.4rem, 5vw, 4rem);
-  gap: 1.25rem;
+  gap: 1.5rem;
 }
 
 .section--center {
@@ -161,6 +161,31 @@ p.muted {
 }
 .warm {
   color: var(--warm);
+}
+
+/* ---------- Verticaal ritme / nettere spacing ---------- */
+h1.display {
+  margin: 0.1rem 0;
+}
+h2.title {
+  line-height: 1.1;
+  margin: 0.1rem 0;
+}
+.eyebrow {
+  margin-bottom: 0.9rem;
+}
+.kicker {
+  margin-bottom: 0.2rem;
+}
+/* Opeenvolgende tekstregels binnen een paneel krijgen lucht. */
+.panel > .reveal + .reveal {
+  margin-top: 0.7rem;
+}
+.panel > p.lead + p.lead {
+  margin-top: 0.7rem;
+}
+.calm-line + .calm-line {
+  margin-top: 0.55rem;
 }
 
 .caret {
@@ -388,17 +413,121 @@ p.muted {
   color: var(--ink-dim);
 }
 
-/* ---------- Verbinding ---------- */
-.connect-word {
-  font-size: clamp(2.4rem, 12vw, 4.4rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
+/* ---------- Verbinding (foto's ontmoeten) ---------- */
+.connect {
+  --p: 0%;
+  width: 100%;
+  max-width: 520px;
+  margin: 2rem auto 1.4rem;
 }
-.amp {
+.connect__people {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.4rem, 2.5vw, 1rem);
+}
+.person {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 0 0 auto;
+  opacity: 0;
+  transition: opacity 1s ease, transform 1.1s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.person:first-child {
+  transform: translateX(26px);
+}
+.person:last-child {
+  transform: translateX(-26px);
+}
+/* Zodra de widget actief wordt: faden in en naar het midden schuiven. */
+.connect.is-active .person {
+  opacity: 1;
+  transform: translateX(0);
+}
+.person__frame {
+  width: clamp(78px, 24vw, 104px);
+  height: clamp(78px, 24vw, 104px);
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 16, 20, 0.8);
+  border: 1px solid rgba(70, 230, 160, 0.3);
+  box-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.9);
+  transition: border-color 0.5s ease, box-shadow 0.5s ease;
+}
+.person__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.person__fallback {
+  font-size: 1.8rem;
+  font-weight: 700;
   color: var(--green);
-  font-size: clamp(1.6rem, 8vw, 2.6rem);
-  opacity: 0.85;
+  opacity: 0.8;
+}
+.person__label {
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.connect.is-connected .person__frame {
+  border-color: var(--green);
+  box-shadow: 0 0 22px var(--green-glow);
+}
+
+/* De subtiele verbindingsbalk tussen de twee */
+.connect__link {
+  position: relative;
+  flex: 1;
+  min-width: 40px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+}
+.connect__track {
+  width: 100%;
+  height: 2px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+.connect__fill {
+  height: 100%;
+  width: var(--p);
+  background: linear-gradient(90deg, transparent, var(--green));
+  box-shadow: 0 0 8px var(--green-glow);
+  transition: width 0.12s linear;
+}
+.connect__spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.2);
+  font-size: 0.85rem;
+  color: var(--warm);
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.5);
+}
+.connect.is-connected .connect__spark {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  text-shadow: 0 0 14px var(--warm-glow);
+}
+
+.connect__status {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.connect__status.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ---------- Onthulling (warm) ---------- */
