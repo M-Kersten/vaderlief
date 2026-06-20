@@ -39,6 +39,10 @@ jobs:
 
       - name: Bouwen
         run: npm run build
+        env:
+          # Discord-webhook uit repository-secrets (zie README). Niet gezet?
+          # Dan valt het formulier terug op de mailapp.
+          VITE_DISCORD_WEBHOOK_URL: ${{ secrets.VITE_DISCORD_WEBHOOK_URL }}
 
       - name: Pages configureren
         uses: actions/configure-pages@v5

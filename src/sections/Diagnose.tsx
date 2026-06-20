@@ -1,44 +1,32 @@
 import Terminal, { Row } from '../components/Terminal'
-import Reveal from '../components/Reveal'
 
 const ROWS: { label: string; value: string; tone: 'crit' | 'bad' | 'dim' }[] = [
   { label: 'Stressniveau', value: '98%', tone: 'crit' },
   { label: 'Open browsertabs', value: 'Te veel', tone: 'bad' },
   { label: 'Agenda', value: 'Overvol', tone: 'crit' },
   { label: 'Meldingen', value: 'Aan', tone: 'bad' },
-  { label: 'Ontspanning', value: 'Niet gevonden', tone: 'dim' },
+  { label: 'Ontspanning', value: '404 — niet gevonden', tone: 'dim' },
 ]
 
 const CHORES = [
+  'Plugin-updates: 23 beschikbaar',
+  "wp-admin: 'even snel' iets fixen",
+  'White screen of death verhelpen',
+  'Cache legen (werkt nu wél)',
+  "Klant wil 'het logo iets groter'",
+  'SSL-certificaat verloopt bijna',
   'Lekkende kraan in de badkamer',
   'Heg snoeien (alweer)',
   'Dakgoot leegmaken',
-  'Boodschappen voor het weekend',
-  "Website van de buurman 'even' fixen",
-  'Backups draaien',
-  'Belastingaangifte',
-  'Schuur opruimen',
-  'Auto naar de garage',
-  'Lampje in de gang vervangen',
-  'Nieuwe snaren op de gitaar',
   'Dave uitlaten (voor de derde keer)',
   'Mailbox: 142 ongelezen',
-  'Verjaardagscadeau nog regelen',
+  'Backup draaien voor de zekerheid',
 ]
 
 export default function Diagnose() {
   return (
     <section className="section" id="diagnose">
-      <div className="panel">
-        <Reveal as="p" className="eyebrow">
-          // Sectie 01 — Diagnose
-        </Reveal>
-        <Reveal as="h2" className="title" delay={1}>
-          Diagnose
-        </Reveal>
-      </div>
-
-      <div style={{ width: '100%', marginTop: '0.4rem' }}>
+      <div style={{ width: '100%' }}>
         <Terminal title="diagnose --scan">
           <div className="alert">Systeem overbelast — onderhoud vereist</div>
 

@@ -9,11 +9,12 @@ pa zelf zijn cadeau en zet hij met één tik een mailtje klaar.
 ## Tech
 
 - **React + TypeScript** (Vite)
-- **React Three Fiber / three.js** — lichte puntenwolk voor diepte & stoom
-- **Matrix digital rain** — zuinig 2D-canvas dat vervaagt richting de onthulling
+- **Matrix digital rain** — subtiel, zuinig 2D-canvas dat vervaagt richting de
+  onthulling (geen zware 3D meer; klein bundeltje)
 - **GSAP ScrollTrigger** — scroll-gebaseerde reveals en parallax
-- **`mailto:`** — geen backend, geen sleutels: het formulier opent de mailapp
-- Mobiel eerst (beperkt aantal deeltjes, `prefers-reduced-motion`, `100svh`).
+- **Discord-webhook** — bij versturen krijg je meteen een seintje met de keuze
+  en datum (met `mailto:` als terugval)
+- Mobiel eerst (`prefers-reduced-motion`, `100svh`-secties).
 
 ## Lokaal draaien
 
@@ -25,17 +26,33 @@ npm run dev
 Open de URL die Vite toont (standaard http://localhost:5173) op je telefoon of
 in de mobiele weergave van je browser.
 
-## Het formulier (mailto — geen account nodig)
+## Het seintje (Discord-webhook)
 
 Onderaan kiest pa een cadeau en (waar relevant) een datum. Bij **Verzoek
-versturen** opent zijn eigen mailapp met alles al ingevuld; hij hoeft alleen op
-verzenden te tikken. Het mailtje komt dan bij jou binnen.
+versturen** stuurt de site een berichtje naar jouw Discord — je krijgt meteen
+een melding met het cadeau, de datum en zijn bericht.
 
-- Ontvanger aanpassen: zet je adres in `TO` boven in
-  `src/sections/Formulier.tsx` (nu `info@merijnkersten.nl`).
-- **Datum is afhankelijk van het cadeau:** wellnessdag = kies een dag,
-  dagje stad = mag ook meerdere dagen, verrassingsconcert = geen datum (dat
-  blijft een verrassing).
+1. In Discord: **Serverinstellingen → Integraties → Webhooks → Nieuwe
+   webhook**, kies een kanaal en klik **"Webhook-URL kopiëren"**.
+2. Zet die URL in een `.env` (kopieer `.env.example`):
+
+   ```env
+   VITE_DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/....
+   ```
+
+3. Herstart `npm run dev` of bouw opnieuw.
+
+> **Terugval:** is er geen webhook ingesteld (of lukt het versturen niet), dan
+> opent het formulier netjes de mailapp (`mailto:`) naar het adres in `TO` boven
+> in `src/sections/Formulier.tsx`. Zo gaat een verzoek nooit verloren.
+>
+> De webhook-URL komt bij een statische build in de JS terecht. Voor een
+> persoonlijk cadeau is dat prima; bij misbruik verwijder je 'm in Discord en
+> maak je een nieuwe aan.
+
+**Datum is afhankelijk van het cadeau:** wellnessdag = kies een dag, dagje stad
+= mag ook meerdere dagen, verrassingsconcert = geen datum (dat blijft een
+verrassing).
 
 ## Persoonlijk spraakbericht (MP3)
 
@@ -52,10 +69,12 @@ De opties (titel, omschrijving, icoon) pas je aan in `src/gifts.ts`.
 ## Hosten op GitHub Pages (Actions)
 
 De workflow `.github/workflows/deploy.yml` bouwt de site en publiceert `dist/`.
-Er zijn geen secrets meer nodig (alles loopt via `mailto:`).
 
 1. **Settings → Pages → Build and deployment → Source: GitHub Actions.**
-2. Elke push naar de geconfigureerde branch (of via "Run workflow") deployt.
+2. Zet je Discord-webhook als **repository-secret** (Settings → Secrets and
+   variables → Actions → New secret): `VITE_DISCORD_WEBHOOK_URL`. De build
+   gebruikt 'm automatisch. (Niet ingesteld? Dan valt de site terug op mailto.)
+3. Elke push naar de geconfigureerde branch (of via "Run workflow") deployt.
    De site komt op `https://m-kersten.github.io/vaderlief/`.
 
 > De Vite-build gebruikt relatieve asset-paden (`base: './'`), dus dit werkt
@@ -75,11 +94,11 @@ met je vader. 💚
 
 ```
 src/
-  three/        Background-canvas + deeltjesveld (stoom) + MatrixRain
-  components/   Reveal, Terminal, ExecList, DissolveText, GiftPicker,
-                AudioMessage, InstallBar
+  components/   MatrixRain, Reveal, Terminal, ExecList, DissolveText,
+                GiftPicker, AudioMessage, InstallBar
   hooks/        useReveal (ScrollTrigger-fade)
   sections/     De verhaalsecties in volgorde
   gifts.ts      De drie cadeau-opties
+  notify.ts     Discord-webhook (het "seintje")
   App.tsx       Zet de secties op één pagina + scroll-voortgang
 ```

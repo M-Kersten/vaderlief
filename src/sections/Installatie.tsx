@@ -5,13 +5,7 @@ import InstallBar from '../components/InstallBar'
 export default function Installatie() {
   return (
     <section className="section section--center" id="installatie">
-      <div className="panel">
-        <Reveal as="p" className="eyebrow">
-          // Installatie
-        </Reveal>
-      </div>
-
-      <div style={{ width: '100%', marginTop: '0.6rem' }}>
+      <div style={{ width: '100%' }}>
         <Terminal title="installer">
           <Row label="pakket" value="vader_zoon_dag" />
           <Row label="versie" value="v1.0" tone="dim" />

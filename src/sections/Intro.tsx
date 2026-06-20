@@ -6,8 +6,8 @@ const STATS: { label: string; value: string; tone?: 'good' | 'bad' | 'dim' }[] =
     { label: 'Leeftijd', value: '57 jaar' },
     { label: 'Herkomst', value: 'Horssen', tone: 'dim' },
     { label: 'Taalmodule', value: 'Plat ✓' },
+    { label: 'Beroep', value: 'Websitebouwer' },
     { label: 'Aantal slechte grappen', value: 'Ontelbaar', tone: 'dim' },
-    { label: 'Beschikbare vrije tijd', value: 'Laag', tone: 'bad' },
     { label: 'Kwaliteit van advies', value: 'Uitstekend' },
   ]
 

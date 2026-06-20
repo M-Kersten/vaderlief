@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from 'react'
 type Stage = { to: number; ms: number; log: string }
 
 const STAGES: Stage[] = [
-  { to: 28, ms: 750, log: 'Ontspanning uitpakken…' },
-  { to: 54, ms: 650, log: 'Samen-tijd configureren…' },
-  { to: 79, ms: 800, log: 'Stress verwijderen…' },
+  { to: 28, ms: 750, log: 'Ontspanning installeren…' },
+  { to: 54, ms: 650, log: 'Cache van zorgen legen…' },
+  { to: 79, ms: 800, log: 'Stress-plugin deactiveren…' },
   { to: 100, ms: 900, log: 'Goede sfeer activeren…' },
 ]
 

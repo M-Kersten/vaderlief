@@ -8,11 +8,7 @@ export default function Onthulling() {
       id="onthulling"
       style={{ minHeight: '110svh' }}
     >
-      <Reveal as="p" className="eyebrow" start="top 82%">
-        // Onthulling
-      </Reveal>
-
-      <Reveal as="h2" className="title glow-warm" delay={1} start="top 80%">
+      <Reveal as="h2" className="title glow-warm" start="top 80%">
         Vader &amp; Zoon
         <br />
         Dag

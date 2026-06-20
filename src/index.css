@@ -44,26 +44,20 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.9;
+  opacity: 0.5;
 }
 
-/* Vaste 3D-achtergrond achter alle secties */
-.bg-canvas {
+/* Subtiel vignet om de aandacht naar het midden te trekken */
+body::after {
+  content: '';
   position: fixed;
   inset: 0;
   z-index: 1;
   pointer-events: none;
-}
-
-/* Subtiele scanline/vignet sfeer bovenop het canvas */
-.bg-canvas::after {
-  content: '';
-  position: absolute;
-  inset: 0;
   background: radial-gradient(
     120% 80% at 50% 40%,
-    transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
+    transparent 52%,
+    rgba(0, 0, 0, 0.62) 100%
   );
 }
 

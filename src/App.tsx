@@ -2,8 +2,7 @@ import { useEffect } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import Background from './three/Background'
-import MatrixRain from './three/MatrixRain'
+import MatrixRain from './components/MatrixRain'
 import { setScrollProgress } from './scrollStore'
 
 import Intro from './sections/Intro'
@@ -19,7 +18,7 @@ import Formulier from './sections/Formulier'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
-  // Eén overkoepelende ScrollTrigger voedt de 3D-achtergrond met de
+  // Eén overkoepelende ScrollTrigger voedt de Matrix-achtergrond met de
   // totale scroll-voortgang (0 -> 1) zonder React te laten herrenderen.
   useEffect(() => {
     const st = ScrollTrigger.create({
@@ -29,7 +28,6 @@ export default function App() {
       onUpdate: (self) => setScrollProgress(self.progress, self.getVelocity()),
     })
 
-    // Zorg dat metingen kloppen nadat alles (fonts/canvas) geladen is.
     const onLoad = () => ScrollTrigger.refresh()
     window.addEventListener('load', onLoad)
 
@@ -42,7 +40,6 @@ export default function App() {
   return (
     <>
       <MatrixRain />
-      <Background />
       <div className="scanlines" aria-hidden="true" />
       <main>
         <Intro />
