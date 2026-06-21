@@ -47,7 +47,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.72;
+  opacity: 0.5;
 }
 
 /* Subtiel vignet om de aandacht naar het midden te trekken */
@@ -139,12 +139,8 @@ main {
   place-items: center;
   text-align: center;
   cursor: pointer;
-  /* Half-transparant zodat de Matrix-regen erachter doorschemert. */
-  background: radial-gradient(
-    120% 90% at 50% 42%,
-    rgba(5, 9, 11, 0.74),
-    rgba(5, 7, 10, 0.9)
-  );
+  /* Volledig dekkend: verhult de achtergrond compleet. */
+  background: radial-gradient(120% 90% at 50% 42%, #080d0f, #05070a);
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.6s ease;
   animation: gateIn 0.6s ease both;
@@ -1108,8 +1104,48 @@ h2.title {
   transition: transform 0.12s ease;
   box-shadow: 0 8px 22px -10px var(--green-glow);
 }
+.msg__play {
+  position: relative;
+}
 .msg__play:active {
   transform: scale(0.93);
+}
+/* Aandacht-ring tot het bericht voor het eerst is afgespeeld. */
+.msg__play.is-attn::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--green);
+  animation: ringPulse 1.6s ease-out infinite;
+}
+@keyframes ringPulse {
+  0% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.55);
+  }
+}
+.msg__cta {
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 0.7rem;
+  padding: 0;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--green);
+  text-align: left;
+}
+.msg__cta::before {
+  content: '▶ ';
 }
 .msg__tri {
   width: 0;

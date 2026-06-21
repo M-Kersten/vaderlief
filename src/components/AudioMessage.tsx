@@ -26,6 +26,7 @@ export default function AudioMessage() {
   const [available, setAvailable] = useState(true)
   const [avatarOk, setAvatarOk] = useState(true)
   const [playing, setPlaying] = useState(false)
+  const [started, setStarted] = useState(false)
   const [time, setTime] = useState(0)
   const [duration, setDuration] = useState(0)
 
@@ -63,6 +64,7 @@ export default function AudioMessage() {
       a.play()
         .then(() => {
           setPlaying(true)
+          setStarted(true)
           // Laat de achtergrondmuziek wegduiken zodat de stem bovenuit komt.
           window.dispatchEvent(new Event('voice:play'))
         })
@@ -79,7 +81,7 @@ export default function AudioMessage() {
 
       <div className="msg__meta">
         <span className="msg__live" />
-        Inkomend bericht
+        Nieuw spraakbericht
       </div>
 
       <div className="msg__bubble">
@@ -98,36 +100,52 @@ export default function AudioMessage() {
         </div>
 
         {available ? (
-          <div className="msg__voice">
-            <button
-              type="button"
-              className={`msg__play${playing ? ' is-playing' : ''}`}
-              onClick={toggle}
-              aria-label={playing ? 'Pauzeer berichtje' : 'Speel berichtje af'}
-            >
-              {playing ? (
-                <span className="msg__pause" aria-hidden="true">
-                  <span />
-                  <span />
-                </span>
-              ) : (
-                <span className="msg__tri" aria-hidden="true" />
-              )}
-            </button>
+          <>
+            <div className="msg__voice">
+              <button
+                type="button"
+                className={`msg__play${playing ? ' is-playing' : ''}${
+                  started ? '' : ' is-attn'
+                }`}
+                onClick={toggle}
+                aria-label={playing ? 'Pauzeer berichtje' : 'Speel berichtje af'}
+              >
+                {playing ? (
+                  <span className="msg__pause" aria-hidden="true">
+                    <span />
+                    <span />
+                  </span>
+                ) : (
+                  <span className="msg__tri" aria-hidden="true" />
+                )}
+              </button>
 
-            <div
-              className={`msg__wave${playing ? ' is-playing' : ''}`}
-              aria-hidden="true"
-            >
-              {WAVE.map((h, i) => (
-                <span
-                  key={i}
-                  className={i < playedBars ? 'is-played' : ''}
-                  style={{ height: `${h}px` }}
-                />
-              ))}
+              <div
+                className={`msg__wave${playing ? ' is-playing' : ''}`}
+                aria-hidden="true"
+              >
+                {WAVE.map((h, i) => (
+                  <span
+                    key={i}
+                    className={i < playedBars ? 'is-played' : ''}
+                    style={{ height: `${h}px` }}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+
+            {!started && (
+              <button
+                type="button"
+                className="msg__cta"
+                onClick={toggle}
+                aria-hidden="true"
+                tabIndex={-1}
+              >
+                Tik om naar mijn berichtje te luisteren
+              </button>
+            )}
+          </>
         ) : (
           <p className="msg__placeholder">🎧 Berichtje volgt…</p>
         )}
