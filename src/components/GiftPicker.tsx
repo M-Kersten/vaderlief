@@ -1,5 +1,6 @@
 import { GIFTS } from '../gifts'
 import { sfx } from '../sound'
+import GiftIcon from './GiftIcon'
 
 /** Kaartjes waaruit pa zijn cadeau kiest. */
 export default function GiftPicker({
@@ -26,7 +27,9 @@ export default function GiftPicker({
               onChange(g.id)
             }}
           >
-            <span className="gift__icon">{g.icon}</span>
+            <span className="gift__icon">
+              <GiftIcon id={g.id} />
+            </span>
             <span className="gift__text">
               <span className="gift__title">{g.title}</span>
               <span className="gift__desc">{g.desc}</span>

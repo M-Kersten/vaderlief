@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from 'react'
 
-// Speelt een persoonlijk MP3-berichtje af. Zet je opname als
-// `public/papa-bericht.mp3` (of pas de naam hieronder aan). Bestaat het
-// bestand nog niet, dan toont de speler netjes "berichtje volgt".
+// Persoonlijk MP3-berichtje, vormgegeven als een inkomend chatbericht met een
+// spraakmemo (afzender "Zoon"). Zet je opname als public/papa-bericht.mp3.
+// Bestaat het bestand nog niet, dan toont de bubbel netjes "berichtje volgt".
 
 const SRC = `${import.meta.env.BASE_URL}papa-bericht.mp3`
+
+// Vaste "waveform" — natuurlijk ogende balkjes voor de spraakmemo.
+const WAVE = [
+  6, 10, 14, 9, 16, 22, 18, 12, 20, 26, 19, 13, 8, 15, 24, 28, 21, 14, 10, 17,
+  23, 16, 11, 7, 12, 9,
+]
 
 function fmt(t: number): string {
   if (!isFinite(t) || t < 0) t = 0
@@ -28,7 +34,6 @@ export default function AudioMessage() {
     const onEnd = () => {
       setPlaying(false)
       setTime(0)
-      // Achtergrondmuziek weer op vol (half) volume.
       window.dispatchEvent(new Event('voice:pause'))
     }
     const onErr = () => setAvailable(false)
@@ -62,45 +67,60 @@ export default function AudioMessage() {
     }
   }
 
-  const pct = duration ? (time / duration) * 100 : 0
+  const pct = duration ? time / duration : 0
+  const playedBars = Math.round(pct * WAVE.length)
 
   return (
-    <div className="audiomsg">
-      {/* preload metadata; bij ontbrekend bestand vangt onError dit op */}
+    <div className="msg">
       <audio ref={audioRef} src={SRC} preload="metadata" />
 
-      <button
-        type="button"
-        className="audiomsg__btn"
-        onClick={toggle}
-        disabled={!available}
-        aria-label={playing ? 'Pauzeer berichtje' : 'Speel berichtje af'}
-      >
-        {!available ? (
-          <span className="audiomsg__icon">🎧</span>
-        ) : playing ? (
-          <span className="audiomsg__icon" aria-hidden="true">
-            <span className="bar" />
-            <span className="bar" />
-          </span>
-        ) : (
-          <span className="audiomsg__icon tri" aria-hidden="true" />
-        )}
-      </button>
+      <div className="msg__meta">
+        <span className="msg__live" />
+        Inkomend bericht
+      </div>
 
-      <div className="audiomsg__body">
-        <span className="audiomsg__label">Een berichtje van je zoon</span>
+      <div className="msg__bubble">
+        <div className="msg__from">
+          <span className="msg__avatar">Z</span>
+          <span className="msg__name">Zoon</span>
+          {available && duration > 0 && (
+            <span className="msg__dur">{fmt(time || duration)}</span>
+          )}
+        </div>
+
         {available ? (
-          <>
-            <div className="audiomsg__track" aria-hidden="true">
-              <div className="audiomsg__fill" style={{ width: `${pct}%` }} />
+          <div className="msg__voice">
+            <button
+              type="button"
+              className={`msg__play${playing ? ' is-playing' : ''}`}
+              onClick={toggle}
+              aria-label={playing ? 'Pauzeer berichtje' : 'Speel berichtje af'}
+            >
+              {playing ? (
+                <span className="msg__pause" aria-hidden="true">
+                  <span />
+                  <span />
+                </span>
+              ) : (
+                <span className="msg__tri" aria-hidden="true" />
+              )}
+            </button>
+
+            <div
+              className={`msg__wave${playing ? ' is-playing' : ''}`}
+              aria-hidden="true"
+            >
+              {WAVE.map((h, i) => (
+                <span
+                  key={i}
+                  className={i < playedBars ? 'is-played' : ''}
+                  style={{ height: `${h}px` }}
+                />
+              ))}
             </div>
-            <span className="audiomsg__time">
-              {fmt(time)} {duration ? `/ ${fmt(duration)}` : ''}
-            </span>
-          </>
+          </div>
         ) : (
-          <span className="audiomsg__time">berichtje volgt 💚</span>
+          <p className="msg__placeholder">🎧 Berichtje volgt…</p>
         )}
       </div>
     </div>

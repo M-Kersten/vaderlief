@@ -35,12 +35,14 @@ export default function BackgroundMusic() {
     return () => a.removeEventListener('error', onErr)
   }, [])
 
-  // Start bij de eerste gebruikersinteractie.
+  // Automatisch starten: zo vroeg mogelijk (eerste scroll/tik). Browsers
+  // blokkeren geluid pas tot de eerste interactie, dus we proberen het meteen
+  // én bij elke vroege interactie tot het lukt.
   useEffect(() => {
     let done = false
     const start = () => {
       unlockSound() // sci-fi effecten mogen nu ook spelen
-      if (done) return
+      if (done || muted) return
       const a = ref.current
       if (!a) return
       applyVolume()
@@ -50,16 +52,23 @@ export default function BackgroundMusic() {
           remove()
         })
         .catch(() => {
-          /* mag mislukken; de knop is de terugval */
+          /* mag mislukken; volgende interactie probeert opnieuw */
         })
     }
-    const events = ['pointerdown', 'touchstart', 'keydown', 'scroll'] as const
+    const events = [
+      'pointerdown',
+      'touchstart',
+      'keydown',
+      'scroll',
+      'wheel',
+    ] as const
     const remove = () =>
       events.forEach((e) => window.removeEventListener(e, start))
     events.forEach((e) =>
       window.addEventListener(e, start, { once: false, passive: true }),
     )
     return remove
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Ducking: zachter zetten terwijl het ingesproken bericht speelt.
