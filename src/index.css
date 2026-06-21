@@ -47,7 +47,7 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.72;
 }
 
 /* Subtiel vignet om de aandacht naar het midden te trekken */
@@ -139,12 +139,12 @@ main {
   place-items: center;
   text-align: center;
   cursor: pointer;
+  /* Half-transparant zodat de Matrix-regen erachter doorschemert. */
   background: radial-gradient(
-      120% 90% at 50% 45%,
-      rgba(8, 14, 12, 0.6),
-      rgba(5, 7, 10, 0.96)
-    ),
-    var(--bg);
+    120% 90% at 50% 42%,
+    rgba(5, 9, 11, 0.74),
+    rgba(5, 7, 10, 0.9)
+  );
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.6s ease;
   animation: gateIn 0.6s ease both;
@@ -177,8 +177,35 @@ main {
   letter-spacing: -0.02em;
 }
 .glow-accent {
-  color: var(--ink);
-  text-shadow: 0 0 26px rgba(70, 230, 160, 0.28);
+  color: #d6ffe9;
+  text-shadow: 0 0 10px rgba(70, 230, 160, 0.7), 0 0 28px rgba(70, 230, 160, 0.45),
+    0 0 60px rgba(70, 230, 160, 0.25);
+  animation: crtFlicker 4s steps(1) infinite;
+}
+/* Subtiele CRT/Matrix-flikkering */
+@keyframes crtFlicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  47% {
+    opacity: 1;
+  }
+  48% {
+    opacity: 0.82;
+  }
+  49% {
+    opacity: 1;
+  }
+  72% {
+    opacity: 1;
+  }
+  73% {
+    opacity: 0.9;
+  }
+  74% {
+    opacity: 1;
+  }
 }
 
 /* Boot-regels */
@@ -1032,16 +1059,24 @@ h2.title {
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .msg__avatar {
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   flex: 0 0 auto;
+  overflow: hidden;
   display: grid;
   place-items: center;
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
   color: var(--bg);
   background: linear-gradient(180deg, var(--green), var(--green-deep));
+  box-shadow: 0 0 10px rgba(70, 230, 160, 0.3);
+}
+.msg__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .msg__name {
   font-size: 0.84rem;

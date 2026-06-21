@@ -47,7 +47,7 @@ export default function MatrixRain() {
 
     let raf = 0
     let last = 0
-    const frameMs = 1000 / 13 // traag en filmisch
+    const frameMs = 1000 / 16 // iets levendiger, klassieke regen
 
     function draw(now: number) {
       raf = requestAnimationFrame(draw)
@@ -56,10 +56,10 @@ export default function MatrixRain() {
 
       // Vervaag de groene regen richting het einde (onthulling).
       const fade = 1 - scrollState.progress
-      const intensity = Math.max(0, Math.min(1, fade)) * 0.3
+      const intensity = Math.max(0, Math.min(1, fade)) * 0.45
 
-      // Lichte trail door half-transparant te overschilderen.
-      ctx!.fillStyle = 'rgba(5, 7, 10, 0.2)'
+      // Lange trails: zacht donker overschilderen (lagere alpha = langere staart).
+      ctx!.fillStyle = 'rgba(5, 7, 10, 0.13)'
       ctx!.fillRect(0, 0, width, height)
 
       ctx!.font = `${fontSize}px 'JetBrains Mono', monospace`
@@ -68,15 +68,15 @@ export default function MatrixRain() {
         const x = i * fontSize
         const y = drops[i] * fontSize
 
-        // Af en toe een iets fellere "kop", verder zacht groen.
-        if (Math.random() > 0.99) {
-          ctx!.fillStyle = `rgba(190, 245, 220, ${intensity + 0.1})`
+        // Felle witgroene "kop" op de regenstroom, daarachter helder groen.
+        if (Math.random() > 0.93) {
+          ctx!.fillStyle = `rgba(215, 255, 235, ${Math.min(1, intensity + 0.32)})`
         } else {
-          ctx!.fillStyle = `rgba(60, 200, 140, ${intensity})`
+          ctx!.fillStyle = `rgba(70, 230, 160, ${intensity})`
         }
         ctx!.fillText(ch, x, y)
 
-        if (y > height && Math.random() > 0.97) drops[i] = 0
+        if (y > height && Math.random() > 0.975) drops[i] = 0
         drops[i]++
       }
     }

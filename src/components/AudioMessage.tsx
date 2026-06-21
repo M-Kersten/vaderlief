@@ -5,6 +5,8 @@ import { useEffect, useRef, useState } from 'react'
 // Bestaat het bestand nog niet, dan toont de bubbel netjes "berichtje volgt".
 
 const SRC = `${import.meta.env.BASE_URL}papa-bericht.mp3`
+// Jouw profielfoto voor het afzender-rondje (valt terug op "Z" als die ontbreekt).
+const AVATAR = `${import.meta.env.BASE_URL}profiel.jpg`
 
 // Vaste "waveform" — natuurlijk ogende balkjes voor de spraakmemo.
 const WAVE = [
@@ -22,6 +24,7 @@ function fmt(t: number): string {
 export default function AudioMessage() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [available, setAvailable] = useState(true)
+  const [avatarOk, setAvatarOk] = useState(true)
   const [playing, setPlaying] = useState(false)
   const [time, setTime] = useState(0)
   const [duration, setDuration] = useState(0)
@@ -81,7 +84,13 @@ export default function AudioMessage() {
 
       <div className="msg__bubble">
         <div className="msg__from">
-          <span className="msg__avatar">Z</span>
+          <span className="msg__avatar">
+            {avatarOk ? (
+              <img src={AVATAR} alt="Zoon" onError={() => setAvatarOk(false)} />
+            ) : (
+              'Z'
+            )}
+          </span>
           <span className="msg__name">Zoon</span>
           {available && duration > 0 && (
             <span className="msg__dur">{fmt(time || duration)}</span>

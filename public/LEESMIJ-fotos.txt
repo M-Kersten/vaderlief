@@ -6,6 +6,12 @@ laden één voor één in terwijl de verbinding tot stand komt:
     samen-3.jpg
     samen-4.jpg
 
+Je profielfoto voor het inkomende bericht (het ronde afzender-icoontje):
+
+    profiel.jpg
+
+Ontbreekt die? Dan toont het rondje netjes de letter "Z".
+
 Tips:
 - Vierkant bijsnijden werkt het mooist (ze worden als vierkante frames getoond).
 - ~600x600 px per foto is ruim voldoende; houd de bestanden klein voor snelheid.
