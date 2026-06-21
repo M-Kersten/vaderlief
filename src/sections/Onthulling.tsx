@@ -22,13 +22,13 @@ export default function Onthulling() {
 
       <div className="panel">
         <Reveal as="p" className="lead" delay={2} start="top 84%">
-          Niet omdat het Vaderdag is.
+          Niet alleen omdat het vaderdag is
         </Reveal>
         <Reveal as="p" className="lead" delay={3} start="top 86%">
-          Maar omdat je er altijd voor ons was — en nooit om iets vroeg.
+          Maar omdat het gewoon een goed plan is om binnenkort wat te doen
         </Reveal>
         <Reveal as="p" className="lead warm" delay={4} start="top 88%">
-          Deze keer is het mijn beurt. Gewoon, om je te bedanken.
+          Lijkt me gezellig :)
         </Reveal>
       </div>
 
