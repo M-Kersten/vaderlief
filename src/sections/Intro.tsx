@@ -6,8 +6,9 @@ const STATS: { label: string; value: string; tone?: 'good' | 'bad' | 'dim' }[] =
   [
     { label: 'Leeftijd', value: '57 jaar' },
     { label: 'Herkomst', value: 'Land van Maas en Waal', tone: 'dim' },
-    { label: 'Taalmodule', value: 'Plat ✓' },
+    { label: 'Taalmodule', value: 'Horssens' },
     { label: 'Beroep', value: 'Websitebouwer' },
+    { label: 'Titel', value: 'Bekende Brummenaar' },
     { label: 'Aantal rare grappen', value: 'Ontelbaar', tone: 'dim' },
     { label: 'Kwaliteit van advies', value: 'Uitstekend' },
   ]

@@ -1256,7 +1256,7 @@ h2.title {
 /* Overvolle klusjeslijst: hoog opgestapeld, onderaan weggevaagd = "te veel". */
 .overflow-list {
   margin-top: 0.6rem;
-  max-height: 8.4rem;
+  max-height: 10.4rem;
   overflow: hidden;
   position: relative;
   -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
