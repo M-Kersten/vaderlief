@@ -129,6 +129,82 @@ main {
     transform: scale(1.7);
   }
 }
+
+/* ---------- Startscherm (vangt de eerste tik op) ---------- */
+.startgate {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  cursor: pointer;
+  background: radial-gradient(
+      120% 90% at 50% 45%,
+      rgba(8, 14, 12, 0.6),
+      rgba(5, 7, 10, 0.96)
+    ),
+    var(--bg);
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.6s ease;
+  animation: gateIn 0.6s ease both;
+}
+.startgate.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+@keyframes gateIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.startgate__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 2rem;
+}
+.startgate__prompt {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: clamp(1.05rem, 5vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+  border: 1px solid rgba(70, 230, 160, 0.35);
+  border-radius: 999px;
+  padding: 0.85rem 1.5rem;
+  background: rgba(10, 16, 20, 0.5);
+  box-shadow: 0 0 0 0 var(--green-glow);
+  animation: gatePulse 2s ease-in-out infinite;
+}
+@keyframes gatePulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(70, 230, 160, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(70, 230, 160, 0);
+  }
+}
+.startgate__tri {
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
+  border-left: 12px solid var(--green);
+}
+.startgate__sub {
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
 .music-toggle.is-muted {
   color: var(--ink-dim);
   border-color: rgba(138, 151, 143, 0.3);

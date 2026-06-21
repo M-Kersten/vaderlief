@@ -75,6 +75,23 @@ export default function BackgroundMusic() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Startscherm: 'app:start' wordt synchroon vanuit de tik gedispatcht, dus
+  // de play() hieronder valt nog binnen die interactie en mag geluid geven.
+  useEffect(() => {
+    const onAppStart = () => {
+      const a = ref.current
+      if (!a) return
+      a.muted = false
+      setMuted(false)
+      setSoundMuted(false)
+      applyVolume()
+      a.play().catch(() => {})
+    }
+    window.addEventListener('app:start', onAppStart)
+    return () => window.removeEventListener('app:start', onAppStart)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   // Ducking: zachter zetten terwijl het ingesproken bericht speelt.
   useEffect(() => {
     const duck = () => {

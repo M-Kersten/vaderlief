@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import MatrixRain from './components/MatrixRain'
 import BackgroundMusic from './components/BackgroundMusic'
+import StartGate from './components/StartGate'
 import { setScrollProgress } from './scrollStore'
 
 import Intro from './sections/Intro'
@@ -19,6 +20,15 @@ import Formulier from './sections/Formulier'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function App() {
+  const [started, setStarted] = useState(false)
+
+  // Vergrendel scrollen tot de bezoeker op "start" tikt; zo vangen we
+  // gegarandeerd de eerste interactie op (nodig om geluid te mogen starten).
+  useEffect(() => {
+    document.body.style.overflow = started ? '' : 'hidden'
+    if (started) ScrollTrigger.refresh()
+  }, [started])
+
   // Eén overkoepelende ScrollTrigger voedt de Matrix-achtergrond met de
   // totale scroll-voortgang (0 -> 1) zonder React te laten herrenderen.
   useEffect(() => {
@@ -40,6 +50,7 @@ export default function App() {
 
   return (
     <>
+      {!started && <StartGate onStart={() => setStarted(true)} />}
       <MatrixRain />
       <BackgroundMusic />
       <div className="scanlines" aria-hidden="true" />
