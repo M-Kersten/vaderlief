@@ -12,14 +12,11 @@ const ROWS: { label: string; value: string; tone: 'crit' | 'bad' | 'dim' }[] = [
 const CHORES = [
   'Plugin-updates: 23 beschikbaar',
   "wp-admin: 'even snel' iets fixen",
-  'White screen of death verhelpen',
   'Cache legen (werkt nu wél)',
-  "Klant wil 'het logo iets groter'",
+  'Repeteren repeteren..',
   'SSL-certificaat verloopt bijna',
-  'Lekkende kraan in de badkamer',
   'Heg snoeien (alweer)',
-  'Dakgoot leegmaken',
-  'Dave uitlaten (voor de derde keer)',
+  'Dave uitlaten',
   'Mailbox: 142 ongelezen',
   'Backup draaien voor de zekerheid',
 ]

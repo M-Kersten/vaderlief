@@ -106,15 +106,14 @@ export default function Formulier() {
           Plan onze dag
         </Reveal>
         <Reveal as="p" className="lead muted" delay={1} start="top 84%">
-          Kies je cadeau en laat weten wanneer je samen weg wilt. Eén tik en ik
-          krijg een seintje.
+          Kies je kado en laat maar weten wanneer!
         </Reveal>
       </div>
 
       <form className="form" onSubmit={handleSubmit} noValidate>
         <div className="field">
           <label>
-            Cadeau <span className="req">*kies er één</span>
+            Cadeau <span className="req">*kies er ééntje</span>
           </label>
           <GiftPicker value={gift} onChange={setGift} />
         </div>
@@ -134,8 +133,7 @@ export default function Formulier() {
             />
             {gift === 'stad' && (
               <span className="form-note">
-                Een weekendje of meerdere dagen mag ook — zet je voorkeur in het
-                bericht.
+                Een weekendje of meerdere dagen mag ook
               </span>
             )}
           </div>
@@ -143,13 +141,12 @@ export default function Formulier() {
 
         {gift === 'concert' && (
           <p className="form-note concert-note">
-            🤫 Dit is een verrassing — de datum hou ik nog even geheim. Zeg
-            gewoon dat je 'm wil, dan regel ik de rest.
+            Dit is een verrassing, de datum hou ik nog even geheim
           </p>
         )}
 
         <div className="field">
-          <label htmlFor="bericht">Extra bericht (optioneel)</label>
+          <label htmlFor="bericht">Extra berichtje</label>
           <textarea
             id="bericht"
             className="textarea"
@@ -202,12 +199,12 @@ function Success({
           )}
           <p className="lead">
             {viaDiscord
-              ? 'Ik krijg meteen een seintje.'
+              ? 'Ik heb m ontvangen'
               : 'Tik daar op verzenden — dan zie ik het meteen.'}
           </p>
           <p className="lead warm">Ik kijk ernaar uit.</p>
         </div>
-        <p className="version">❤️ Papa &amp; zoon dag</p>
+        <p className="version">Papa &amp; zoon dag</p>
       </div>
     </section>
   )

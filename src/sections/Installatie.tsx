@@ -15,7 +15,7 @@ export default function Installatie() {
 
       <Reveal className="badge" delay={1} start="top 86%">
         <span className="pulse" />
-        Cadeau succesvol geïnstalleerd
+        Kado succesvol geïnstalleerd
       </Reveal>
 
       <p className="version">vader_zoon_dag_v1.0 · status: Actief ✓</p>

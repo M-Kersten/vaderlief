@@ -5,8 +5,7 @@ const STEPS: ExecStep[] = [
   { cmd: 'wp-admin afsluiten...', done: true },
   { cmd: 'Plugin-updates negeren (mag deze keer)...', done: true },
   { cmd: 'Telefoon op stil...', done: true },
-  { cmd: 'Dave een extra koekje geven...', done: true },
-  { cmd: "'Er is geen deadline.'...", done: true },
+  { cmd: 'Dave wat extra brokjes geven...', done: true },
   { cmd: 'Verantwoordelijkheden tijdelijk parkeren...', done: true },
   { cmd: 'Ontspanningsmodus laden...', done: false },
 ]

@@ -5,10 +5,10 @@ import { sfx } from '../sound'
 const STATS: { label: string; value: string; tone?: 'good' | 'bad' | 'dim' }[] =
   [
     { label: 'Leeftijd', value: '57 jaar' },
-    { label: 'Herkomst', value: 'Horssen', tone: 'dim' },
+    { label: 'Herkomst', value: 'Land van Maas en Waal', tone: 'dim' },
     { label: 'Taalmodule', value: 'Plat ✓' },
     { label: 'Beroep', value: 'Websitebouwer' },
-    { label: 'Aantal slechte grappen', value: 'Ontelbaar', tone: 'dim' },
+    { label: 'Aantal rare grappen', value: 'Ontelbaar', tone: 'dim' },
     { label: 'Kwaliteit van advies', value: 'Uitstekend' },
   ]
 

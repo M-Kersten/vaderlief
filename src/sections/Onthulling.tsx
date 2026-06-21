@@ -22,13 +22,13 @@ export default function Onthulling() {
 
       <div className="panel">
         <Reveal as="p" className="lead" delay={2} start="top 84%">
-          Een dag om even stil te staan.
+          Misschien Een dag om even stil te staan?
         </Reveal>
         <Reveal as="p" className="lead" delay={3} start="top 86%">
-          Goed eten. Lekker ontspannen.
+          Lekker eten en ontspannen?
         </Reveal>
         <Reveal as="p" className="lead warm" delay={4} start="top 88%">
-          En vooral: samen tijd doorbrengen.
+          Of een nieuwe band ontdekken?
         </Reveal>
       </div>
 

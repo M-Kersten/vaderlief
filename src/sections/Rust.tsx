@@ -26,7 +26,7 @@ export default function Rust() {
         start="top 80%"
         onReveal={() => sfx.calm()}
       >
-        Even niets hoeven.
+        Eventjes niets hoeven.
       </Reveal>
 
       <div className="panel">
@@ -38,9 +38,6 @@ export default function Rust() {
         </Reveal>
         <Reveal as="p" className="calm-line" delay={3} start="top 86%">
           Geen afleiding.
-        </Reveal>
-        <Reveal as="p" className="calm-line small" delay={4} start="top 88%">
-          Alle drukte mag verdampen… als tranen in de regen.
         </Reveal>
       </div>
     </section>

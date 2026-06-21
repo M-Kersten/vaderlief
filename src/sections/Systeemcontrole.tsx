@@ -6,8 +6,7 @@ const STEPS: ExecStep[] = [
   { cmd: 'Geen kleinkinderen om op te passen (nog niet)...', done: true },
   { cmd: 'Geen websites die vandaag live moeten...', done: true },
   { cmd: 'Geen plugin-updates die écht niet kunnen wachten...', done: true },
-  { cmd: 'Dave (Davemans) heeft een oppas...', done: true },
-  { cmd: 'Volg het witte konijn...', done: true },
+  { cmd: 'Davemans heeft een oppas...', done: true },
 ]
 
 export default function Systeemcontrole() {
