@@ -121,7 +121,9 @@ export default function Formulier() {
         {wantsDate && (
           <div className="field">
             <label htmlFor="datum">
-              {gift === 'stad' ? 'Datum (mag ook meerdere dagen)' : 'Datum'}
+              {gift === 'stad'
+                ? 'Datum (optioneel, mag ook meerdere dagen)'
+                : 'Datum (optioneel)'}
             </label>
             <input
               id="datum"
@@ -204,7 +206,6 @@ function Success({
           </p>
           <p className="lead warm">Ik kijk ernaar uit.</p>
         </div>
-        <p className="version">Papa &amp; zoon dag</p>
       </div>
     </section>
   )
