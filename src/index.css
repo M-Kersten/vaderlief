@@ -851,19 +851,19 @@ h2.title {
 /* ---------- Inkomend bericht (spraakmemo van de zoon) ---------- */
 .msg {
   width: 100%;
-  max-width: 380px;
+  max-width: 340px;
   margin: 0 auto;
   text-align: left;
 }
 .msg__meta {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
+  gap: 0.45rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--ink-dim);
-  margin: 0 0 0.5rem 0.3rem;
+  margin: 0 0 0.55rem 0.2rem;
 }
 .msg__live {
   width: 7px;
@@ -872,91 +872,67 @@ h2.title {
   background: var(--green);
   box-shadow: 0 0 0 0 var(--green-glow);
   animation: pulse 1.8s infinite;
+  flex: 0 0 auto;
 }
-/* De bubbel komt binnenglijden van links zodra de sectie in beeld is. */
 .msg__bubble {
-  position: relative;
   background: linear-gradient(
     180deg,
-    rgba(16, 22, 26, 0.92),
-    rgba(10, 14, 18, 0.92)
+    rgba(17, 23, 27, 0.94),
+    rgba(11, 15, 19, 0.94)
   );
   border: 1px solid rgba(70, 230, 160, 0.22);
-  border-radius: 16px 16px 16px 4px;
-  padding: 0.8rem 0.9rem;
-  box-shadow: 0 18px 50px -30px rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  transform: translateX(-18px) scale(0.98);
-}
-.is-visible .msg__bubble {
-  animation: msgIn 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s forwards;
-}
-/* Klein staartje linksonder, als een chatbubbel. */
-.msg__bubble::before {
-  content: '';
-  position: absolute;
-  left: -6px;
-  bottom: 0;
-  width: 14px;
-  height: 14px;
-  background: inherit;
-  border-left: 1px solid rgba(70, 230, 160, 0.22);
-  border-bottom: 1px solid rgba(70, 230, 160, 0.22);
-  border-bottom-left-radius: 4px;
-  clip-path: polygon(0 100%, 100% 100%, 0 0);
-}
-@keyframes msgIn {
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+  border-radius: 16px 16px 16px 5px;
+  padding: 0.85rem 0.95rem;
+  box-shadow: 0 18px 50px -32px rgba(0, 0, 0, 0.9);
 }
 .msg__from {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
+  gap: 0.55rem;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .msg__avatar {
-  width: 26px;
-  height: 26px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
+  flex: 0 0 auto;
   display: grid;
   place-items: center;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 700;
   color: var(--bg);
   background: linear-gradient(180deg, var(--green), var(--green-deep));
 }
 .msg__name {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 500;
   color: var(--ink);
 }
 .msg__dur {
   margin-left: auto;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--ink-dim);
   font-variant-numeric: tabular-nums;
 }
 .msg__voice {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.8rem;
 }
 .msg__play {
   appearance: none;
   cursor: pointer;
   flex: 0 0 auto;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   border: none;
   background: linear-gradient(180deg, var(--green), var(--green-deep));
-  color: var(--bg);
   display: grid;
   place-items: center;
-  transition: transform 0.12s ease, box-shadow 0.25s ease;
+  transition: transform 0.12s ease;
   box-shadow: 0 8px 22px -10px var(--green-glow);
 }
 .msg__play:active {
@@ -972,37 +948,35 @@ h2.title {
 }
 .msg__pause {
   display: inline-flex;
-  gap: 3px;
+  gap: 4px;
 }
 .msg__pause span {
   width: 3.5px;
-  height: 13px;
+  height: 14px;
   border-radius: 2px;
   background: var(--bg);
 }
-/* Waveform van de spraakmemo */
+/* Waveform van de spraakmemo: gelijkmatig verdeelde balkjes */
 .msg__wave {
   display: flex;
   align-items: center;
-  gap: 2px;
+  justify-content: space-between;
   flex: 1;
-  height: 30px;
+  height: 32px;
   min-width: 0;
 }
 .msg__wave span {
-  flex: 1;
-  min-width: 2px;
-  max-width: 4px;
+  flex: 0 0 3px;
+  width: 3px;
   border-radius: 2px;
-  background: rgba(138, 151, 143, 0.4);
+  background: rgba(138, 151, 143, 0.35);
   transition: background 0.15s linear;
 }
 .msg__wave span.is-played {
   background: var(--green);
-  box-shadow: 0 0 6px var(--green-glow);
 }
 .msg__wave.is-playing span.is-played:last-of-type {
-  animation: wavePulse 0.6s ease-in-out infinite;
+  animation: wavePulse 0.7s ease-in-out infinite;
 }
 @keyframes wavePulse {
   0%,
@@ -1010,12 +984,13 @@ h2.title {
     transform: scaleY(1);
   }
   50% {
-    transform: scaleY(0.6);
+    transform: scaleY(0.55);
   }
 }
 .msg__placeholder {
   font-size: 0.9rem;
   color: var(--ink-dim);
+  margin: 0;
 }
 
 .form-error {

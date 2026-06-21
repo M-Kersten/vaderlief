@@ -35,39 +35,43 @@ export default function BackgroundMusic() {
     return () => a.removeEventListener('error', onErr)
   }, [])
 
-  // Automatisch starten: zo vroeg mogelijk (eerste scroll/tik). Browsers
-  // blokkeren geluid pas tot de eerste interactie, dus we proberen het meteen
-  // én bij elke vroege interactie tot het lukt.
+  // Automatisch starten bij de allereerste interactie. Let op: browsers staan
+  // geluid pas toe ná een "echte" interactie (tik/klik/toets). Scrollen met een
+  // muiswiel telt op desktop meestal NIET — maar op de telefoon telt de eerste
+  // aanraking (waarmee je scrolt) wél, dus daar start het vanzelf.
   useEffect(() => {
     let done = false
-    const start = () => {
+    const tryStart = () => {
       unlockSound() // sci-fi effecten mogen nu ook spelen
       if (done || muted) return
       const a = ref.current
       if (!a) return
+      a.muted = false
       applyVolume()
       a.play()
         .then(() => {
           done = true
-          remove()
+          cleanup()
         })
         .catch(() => {
-          /* mag mislukken; volgende interactie probeert opnieuw */
+          /* nog niet toegestaan; volgende interactie probeert opnieuw */
         })
     }
+    // Capture-fase op document vangt élke eerste interactie op.
     const events = [
       'pointerdown',
+      'mousedown',
       'touchstart',
+      'click',
       'keydown',
       'scroll',
       'wheel',
-    ] as const
-    const remove = () =>
-      events.forEach((e) => window.removeEventListener(e, start))
-    events.forEach((e) =>
-      window.addEventListener(e, start, { once: false, passive: true }),
-    )
-    return remove
+    ]
+    const opts: AddEventListenerOptions = { capture: true, passive: true }
+    const cleanup = () =>
+      events.forEach((e) => document.removeEventListener(e, tryStart, opts))
+    events.forEach((e) => document.addEventListener(e, tryStart, opts))
+    return cleanup
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
