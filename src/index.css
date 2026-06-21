@@ -165,22 +165,84 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.2rem;
-  padding: 2rem;
+  gap: 1.15rem;
+  padding: 2rem 1.5rem;
+  width: 100%;
+  max-width: 440px;
 }
+.startgate__title {
+  font-size: clamp(2.2rem, 11vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.glow-accent {
+  color: var(--ink);
+  text-shadow: 0 0 26px rgba(70, 230, 160, 0.28);
+}
+
+/* Boot-regels */
+.startgate__boot {
+  list-style: none;
+  width: 100%;
+  max-width: 320px;
+  margin: 0.4rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+}
+.startgate__boot li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+  color: var(--ink-dim);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.startgate__boot li.is-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+.startgate__boot .b-prompt {
+  color: var(--green);
+}
+.startgate__boot .b-ok {
+  color: var(--green);
+  font-weight: 500;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.25s;
+}
+.startgate__boot li.is-on .b-ok {
+  opacity: 1;
+}
+.startgate__boot .b-ok::before {
+  content: '✓ ';
+}
+
 .startgate__prompt {
   display: inline-flex;
   align-items: center;
   gap: 0.7rem;
-  font-size: clamp(1.05rem, 5vw, 1.35rem);
+  font-size: clamp(1.05rem, 5vw, 1.3rem);
   font-weight: 500;
   letter-spacing: 0.02em;
   color: var(--ink);
   border: 1px solid rgba(70, 230, 160, 0.35);
   border-radius: 999px;
-  padding: 0.85rem 1.5rem;
+  padding: 0.8rem 1.5rem;
+  margin-top: 0.4rem;
   background: rgba(10, 16, 20, 0.5);
   box-shadow: 0 0 0 0 var(--green-glow);
+  opacity: 0;
+  transform: translateY(6px) scale(0.96);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.2, 0.8, 0.3, 1.3);
+}
+.startgate__prompt.is-ready {
+  opacity: 1;
+  transform: translateY(0) scale(1);
   animation: gatePulse 2s ease-in-out infinite;
 }
 @keyframes gatePulse {
